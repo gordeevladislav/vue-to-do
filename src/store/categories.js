@@ -25,10 +25,13 @@ export default {
     },
     deleteCategory ({ commit, getters }, payload) {
       const categories = getters.categories
-      const categoryIndex = categories.indexOf(payload)
-      categories.splice(categoryIndex, 1)
 
-      commit('updateCategory', categories)
+      if (categories.length > 1) {
+        const categoryIndex = categories.indexOf(payload)
+        categories.splice(categoryIndex, 1)
+
+        commit('updateCategory', categories)
+      }
 
       if (categories.length) {
         commit('setCurrentCategory', categories[0].id)
