@@ -1,25 +1,33 @@
-# vue-to-do
+# To-do list
 
-## Project setup
+<img width="800" alt="Чат на Vue" src="vue-to-do.gif">
+
+Клиентская часть to-do приложения на Vue.js.
+
+**Стек**: Vue.js, Vuex, Packery (grid).
+
+## Функционал:
+1. Можно добавлять и удалять списки задач;
+2. Можно переключаться между списками и добавлять в них задачи, либо удалять их;
+3. Состояние приложения сохраняется в общем store.
+4. Для построения гибкой сетки использована библиотека Packery.
+
+## Как можно улучшить:
+1. Подключить базу данных;
+3. Добавить функцию копирования задач и списков;
+4. Добавить функцию редактирования названия задач и списков.
+
+## Установка
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### Открыть в браузере
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### Сборка в продакшн
 ```
 npm run build
 ```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
-# vue-to-do
