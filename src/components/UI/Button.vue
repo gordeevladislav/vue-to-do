@@ -1,7 +1,6 @@
 <template>
   <button
-    class="button"
-    :class="getModifier"
+    :class='"button " + getModifier'
     @click="$emit('click')"
     type="button"
   >
@@ -21,17 +20,28 @@ export default {
 </script>
 
 <style>
-.button {
+/* .button {
   box-sizing: border-box;
 
-  font-size: 17px;
-  font-weight: 700;
 
-  border: none;
-  border-radius: 9px;
+} */
 
-  cursor: pointer;
-}
+  .button {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+    text-decoration: none;
+    font-weight: 700;
+    color:#ffffff;
+
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+  }
 
 .button--primary {
   background-color: #00b3b3;

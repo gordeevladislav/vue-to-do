@@ -70,33 +70,17 @@ export default {
     margin: 0 auto;
   }
 
-  .button {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 16px;
-    text-decoration: none;
-    color:#ffffff;
-
-    background-color: #1b1b1b;
-    border: 1px solid #363636;
-    border-radius: 4px;
+  .drower-enter-active {
+    transition: all .3s ease;
   }
 
-.drower-enter-active {
-  transition: all .3s ease;
-}
+  .drower-leave-active {
+    transition: all .3s ease;
+  }
 
-.drower-leave-active {
-  transition: all .3s ease;
-}
-
-.drower-enter,
-.drower-leave-to {
-  transform: translateX(-300px);
-}
+  .drower-enter,
+  .drower-leave-to {
+    transform: translateX(-300px);
+  }
 
 </style>
