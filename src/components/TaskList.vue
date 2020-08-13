@@ -19,7 +19,6 @@
           text="Add"
           type="primary"
           @click="createTask"
-          :disabled="!value.trim()"
           aria-label="Создать задачу"
         />
       </div>
@@ -88,7 +87,12 @@ export default {
   },
   methods: {
     createTask () {
-      const input = document.querySelector('.tasks__input')
+      const input = document.querySelector('.tasks__input');
+      const taskValue = this.value.trim();
+
+      if (!taskValue) {
+        return;
+      }
 
       const task = {
         text: this.value.trim(),
@@ -109,7 +113,7 @@ export default {
     },
     toggleStatus (task) {
       this.$store.dispatch('toggleStatus', task)
-    }
+    },
   },
   mounted () {
     const input = document.querySelector('.tasks__input');

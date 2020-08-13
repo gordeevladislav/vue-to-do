@@ -16,7 +16,6 @@
       <app-button
         class="categories__button"
         @click="createCategory"
-        :disabled="!value.trim()"
         type="nav"
         text="Add"
         aria-label="Create new tasks category"
@@ -68,6 +67,12 @@ export default {
   },
   methods: {
     createCategory () {
+      const value = this.value.trim();
+
+      if (!value) {
+        return;
+      }
+
       const newCategory = {
         name: this.value.trim(),
         id: getRandomNumber()
