@@ -20,28 +20,22 @@ export default {
 </script>
 
 <style>
-/* .button {
+.button {
   box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
+  font-family: Roboto, Arial, sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+  font-weight: 700;
+  color:#ffffff;
 
-} */
-
-  .button {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    font-family: Roboto, Arial, sans-serif;
-    font-size: 16px;
-    text-decoration: none;
-    font-weight: 700;
-    color:#ffffff;
-
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-  }
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
 
 .button--primary {
   background-color: #00b3b3;
@@ -76,7 +70,5 @@ export default {
 .button--nav:disabled {
   background-color: #80d390;
 }
-
-
 
 </style>

@@ -1,37 +1,29 @@
 <template>
   <ul class="filter__list">
     <li
-      v-for="filter of filters"
-      :key="filter.id"
+      v-for="(filter, index) of filters"
+      :key="index"
       class="filter__item"
-      :class="{'filter__item--active': isActive(filter.text)}"
+      :class="{'filter__item--active': filter === activeFilter}"
     >
       <a
         class="filter__link"
-        @click.prevent="$emit('click', filter.value)"
+        @click.prevent="$emit('click', filter)"
         href
-      > {{ filter.text }}
+      > {{ filter }}
       </a>
     </li>
   </ul>
 </template>
 
 <script>
+import { filterTypes } from '../utils';
 
 export default {
   props: ['activeFilter'],
   data () {
     return {
-      filters: [
-        { value: "all", text: "All", id: 1 },
-        { value: "completed", text: "Completed", id: 2 },
-        { value: "active", text: "Active", id: 3 }
-      ],
-    }
-  },
-  methods: {
-    isActive (filter) {
-      return filter.toLowerCase() === this.activeFilter
+      filters: Object.values(filterTypes)
     }
   }
 }

@@ -9,7 +9,7 @@
         <input
           class="tasks__input"
           v-model="value"
-          @keydown.enter="createTask"
+          @keydown.enter="create"
           type="text"
           placeholder="Add new task"
           id="new-task"
@@ -18,7 +18,7 @@
           class="tasks__add-button"
           text="Add"
           type="primary"
-          @click="createTask"
+          @click="create"
           aria-label="Создать задачу"
         />
       </div>
@@ -36,90 +36,60 @@
         gutter: ".gutter-sizer"
       }'
     >
-    <div class="gutter-sizer"></div>
-    <app-task
-      v-for="(task, index) of filteredTasks"
-      :key="index"
+      <div class="gutter-sizer"></div>
+      <app-task
+        v-for="(task, index) of filteredTasks"
+        :key="index"
 
-      class="tasks__item"
-      :item="task"
-      @onCloserClick="deleteTask(task)"
-      @onDoneClick="toggleStatus(task)"
-      v-packery-item
-      aria-label="Delete task"
-    />
+        class="tasks__item"
+        :item="task"
+        @on-closer-click="remove(task)"
+        @on-done-click="toggleStatus(task)"
+        v-packery-item
+        aria-label="Delete task"
+      />
     </ul>
 
   </section>
 </template>
 
 <script>
-import Button from './UI/Button'
-import Task from './Task'
+import { mapGetters } from 'vuex';
+import { getFilteredTasks, createTask } from '../methods/task';
+import Button from './UI/Button';
+import Task from './Task';
 import TaskFilter from "./TaskFilter";
-import { getRandomNumber } from '../auxiliary'
 
 export default {
-  data () {
+  data() {
     return {
       value: '',
-      activeFilter: 'all'
+      activeFilter: "all"
     }
   },
   computed: {
-    filteredTasks () {
-      const setup = {
-        active: false,
-        completed: true,
-      }
-
-      const currentCategoryId = this.$store.getters.currentCategoryId
-
-      const tasksOfCategory = this.$store.getters.tasks
-        .filter(({ categoryId }) => categoryId === currentCategoryId)
-
-      const filtered = this.activeFilter === "all"
-        ? tasksOfCategory
-        : tasksOfCategory.filter(({ completed }) => completed === setup[this.activeFilter])
-
-      return filtered
+    ...mapGetters([
+      'currentCategoryId',
+      'tasks'
+    ]),
+    filteredTasks() {
+      return getFilteredTasks.call(this);
     }
   },
   methods: {
-    createTask () {
-      const input = document.querySelector('.tasks__input');
-      const taskValue = this.value.trim();
-
-      if (!taskValue) {
-        return;
-      }
-
-      const task = {
-        text: this.value.trim(),
-        id: getRandomNumber(),
-        completed: false,
-        categoryId: this.$store.getters.currentCategoryId
-      }
-
-      this.$store.dispatch('createTask', task)
-      this.value = ''
-      input.focus()
+    create () {
+      createTask.call(this);
     },
-    deleteTask (task) {
-      this.$store.dispatch('deleteTask', task)
+    remove (task) {
+      this.$store.dispatch('deleteTask', task);
     },
     setActiveFilter (filter) {
-      this.activeFilter = filter
+      this.activeFilter = filter;
     },
     toggleStatus (task) {
-      this.$store.dispatch('toggleStatus', task)
+      this.$store.dispatch('toggleStatus', task);
     },
   },
-  mounted () {
-    const input = document.querySelector('.tasks__input');
-    input.focus();
-  },
-
   components: {
     appTask: Task,
     appButton: Button,
@@ -183,7 +153,7 @@ export default {
 .list-enter-active, .list-leave-active {
   transition: all 1s;
 }
-.list-enter, .list-leave-to /* .list-leave-active до версии 2.1.8 */ {
+.list-enter, .list-leave-to {
   opacity: 0;
   transform: translateY(30px);
 }
