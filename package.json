@@ -11,8 +11,8 @@
     "core-js": "^3.6.5",
     "install": "^0.13.0",
     "npm": "^6.14.6",
+    "uuid": "^8.3.0",
     "vue": "^2.6.11",
-    "vue-packery-draggabilly-plugin": "^1.0.3",
     "vue-packery-plugin": "^1.4.8",
     "vuex": "^3.4.0"
   },

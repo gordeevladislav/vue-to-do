@@ -6,8 +6,8 @@
       </label>
       <input
         class="categories__input"
-        v-model="value"
-        @keydown.enter="createCategory"
+        v-model="name"
+        @keydown.enter="create"
         type="text"
         placeholder="Add new category"
         id="new-category"
@@ -15,7 +15,7 @@
 
       <app-button
         class="categories__button"
-        @click="createCategory"
+        @click="create"
         type="nav"
         text="Add"
         aria-label="Create new tasks category"
@@ -25,22 +25,22 @@
     <ul class="categories__list">
       <li
         class="categories__item"
-        v-for="category of categories"
-        :key="category.id"
+        v-for="({name, id}) of categories"
+        :key="id"
       >
         <a
           class="categories__link"
-          :class="{'categories__link--active': isActive(category.id)}"
-          @click.prevent="setCurrentCategory(category.id)"
+          :class="{'categories__link--active': id === currentCategoryId}"
+          @click.prevent="setCurrent(id)"
           href
         >
-          {{ category.name }}
+          {{ name }}
         </a>
         <button
           class="category__closer fas fa-times"
-          @click="deleteCategory(category)"
+          @click="remove(id)"
           type="button"
-          aria-label="Delete category"
+          aria-label="Remove category"
         />
       </li>
     </ul>
@@ -48,54 +48,35 @@
 </template>
 
 <script>
-import Button from "./UI/Button";
-import { getRandomNumber } from '../auxiliary'
+import { mapGetters } from 'vuex';
+import { createCategory } from '../methods/category';
+import Button from './UI/Button';
 
 export default {
   data() {
     return {
-      value: ""
+      name: ''
     }
   },
   computed: {
-    categories () {
-      return this.$store.getters.categories
-    },
-    currentCategoryId () {
-      return this.$store.getters.currentCategoryId
-    }
+    ...mapGetters([
+      'categories',
+      'currentCategoryId'
+    ])
   },
   methods: {
-    createCategory () {
-      const value = this.value.trim();
-
-      if (!value) {
-        return;
-      }
-
-      const newCategory = {
-        name: this.value.trim(),
-        id: getRandomNumber()
-      }
-
-      this.$store.dispatch('createCategory', newCategory)
-      this.value = ''
+    create () {
+      createCategory.call(this);
     },
-    setCurrentCategory (id) {
+    setCurrent (id) {
       if (id !== this.currentCategoryId) {
-        this.$store.dispatch("setCurrentCategory", id)
+        this.$store.dispatch('setCurrentCategory', id);
       }
     },
-    isCategoryActive (id) {
-      return id === this.currentCategoryId;
+    remove (id) {
+      this.$store.dispatch('removeCategory', id);
+      this.$store.dispatch('removeTasksByCategoryId', id);
     },
-    deleteCategory (category) {
-      this.$store.dispatch("deleteCategory", category)
-      this.$store.dispatch("deleteTasksByCategoriesId", category.id)
-    },
-    isActive (id) {
-      return id === this.$store.getters.currentCategoryId
-    }
   },
   components: {
     appButton: Button

@@ -5,7 +5,7 @@
   >
     <button
       class="task__closer fas fa-times"
-      @click="$emit('onCloserClick')"
+      @click="$emit('on-closer-click')"
       type="button"
       aria-label="Delete task"
     />
@@ -13,7 +13,7 @@
       <button
         class="task__completer fa-check-circle far"
         :class="{'fas': item.completed, 'task__completer--done': item.completed}"
-        @click="$emit('onDoneClick')"
+        @click="$emit('on-done-click')"
         type="button"
         aria-label="Mark completed"
       />

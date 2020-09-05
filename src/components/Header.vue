@@ -7,18 +7,13 @@
       type="button"
       aria-label="Toggle drower"
     />
-    <h1 class="header__title">{{ pageTitle }}</h1>
+    <h1 class="header__title">Vue To Do</h1>
   </header>
 </template>
 
 <script>
 export default {
-  props: ['isDrowerOn'],
-  data () {
-    return {
-      pageTitle: "Vue To Do",
-    }
-  }
+  props: ['isDrowerOn']
 }
 </script>
 

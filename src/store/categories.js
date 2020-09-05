@@ -1,11 +1,9 @@
+import { categories, currentCategory } from '../mock';
+
 export default {
   state: {
-    categories: [
-      { name: 'Срочные', id: 12345 },
-      { name: 'Домашние', id: 102031 },
-      { name: 'Рабочие', id: 81273127 },
-    ],
-    currentCategory: 12345
+    categories,
+    currentCategory
   },
   mutations: {
     createCategory (state, payload) {
@@ -20,33 +18,34 @@ export default {
   },
   actions: {
     createCategory ({ commit }, payload) {
-      commit('createCategory', payload)
-      commit('setCurrentCategory', payload.id)
+      commit('createCategory', payload);
+      commit('setCurrentCategory', payload.id);
     },
-    deleteCategory ({ commit, getters }, payload) {
-      const categories = getters.categories
 
-      if (categories.length > 1) {
-        const categoryIndex = categories.indexOf(payload)
-        categories.splice(categoryIndex, 1)
+    removeCategory ({ commit, getters }, payload) {
+      const categories = getters.categories;
+      const [categoryToRemove] = categories.filter(({ id })=> id === payload);
 
-        commit('updateCategory', categories)
-      }
+      const index = categories.indexOf(categoryToRemove);
+      categories.splice(index, 1);
+
+      commit('updateCategory', categories);
 
       if (categories.length) {
-        commit('setCurrentCategory', categories[0].id)
+        commit('setCurrentCategory', categories[0].id);
       }
     },
+
     setCurrentCategory ({ commit }, payload) {
-      commit('setCurrentCategory', payload)
+      commit('setCurrentCategory', payload);
     }
   },
   getters: {
     categories (state) {
-      return state.categories
+      return state.categories;
     },
     currentCategoryId (state) {
-      return state.currentCategory
+      return state.currentCategory;
     }
   }
 }
