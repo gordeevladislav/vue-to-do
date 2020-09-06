@@ -51,6 +51,7 @@ const generateCategory = () => {
 
 const generateTask = () => {
   return {
+    title: generateRandomTaskText(),
     text: generateRandomTaskText(),
     id: v4(),
     completed: false,

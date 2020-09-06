@@ -1,25 +1,41 @@
 <template>
   <header class="header">
-    <button
-      class="header__toggle fas"
-      :class="{ 'fa-times': isDrowerOn, 'fa-bars': !isDrowerOn }"
-      @click="$emit('click')"
-      type="button"
-      aria-label="Toggle drower"
+    <div class="header__container">
+      <button
+        class="header__toggle fas"
+        :class="{ 'fa-times': isDrowerOn, 'fa-bars': !isDrowerOn }"
+        @click="$emit('drower-toggle-click')"
+        type="button"
+        aria-label="Toggle drower"
+      />
+      <h1 class="header__title">Vue To Do</h1>
+    </div>
+    <app-button
+      class="tasks__add-button"
+      text="Add"
+      type="primary"
+      @click="$emit('add-button-click')"
+      aria-label="Создать задачу"
     />
-    <h1 class="header__title">Vue To Do</h1>
   </header>
 </template>
 
 <script>
+import Button from './UI/Button';
+
 export default {
-  props: ['isDrowerOn']
+  props: ['isDrowerOn'],
+  components: {
+    appButton: Button
+  }
 }
 </script>
 
 <style>
 .header {
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   height: 70px;
   padding: 0 30px;
@@ -27,6 +43,11 @@ export default {
   background-color: teal;
 
   cursor: default;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
 }
 
 .header__toggle {

@@ -18,7 +18,7 @@
         aria-label="Mark completed"
       />
       <p class="task__text">
-        {{ item.text }}
+        {{ item.title }}
       </p>
     </div>
   </li>

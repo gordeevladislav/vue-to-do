@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { categories, currentCategory } from '../mock';
 
 export default {
@@ -18,8 +19,12 @@ export default {
   },
   actions: {
     createCategory ({ commit }, payload) {
-      commit('createCategory', payload);
-      commit('setCurrentCategory', payload.id);
+      const category = {
+        name: payload,
+        id: v4()
+      }
+      commit('createCategory', category);
+      commit('setCurrentCategory', category.id);
     },
 
     removeCategory ({ commit, getters }, payload) {

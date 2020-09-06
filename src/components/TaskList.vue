@@ -3,23 +3,15 @@
     <h2 class="visually-hidden">Task list</h2>
     <div class="tasks__actions">
       <div class="tasks__new-task-actions">
-        <label class="visually-hidden" for="new-task">
-          Add new task
+        <label class="visually-hidden" for="find-task">
+          Find task by title
         </label>
         <input
           class="tasks__input"
-          v-model="value"
-          @keydown.enter="create"
+          v-model="taskTitle"
           type="text"
-          placeholder="Add new task"
-          id="new-task"
-        />
-        <app-button
-          class="tasks__add-button"
-          text="Add"
-          type="primary"
-          @click="create"
-          aria-label="Создать задачу"
+          placeholder="Find by title"
+          id="find-task"
         />
       </div>
 
@@ -55,15 +47,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { getFilteredTasks, createTask } from '../methods/task';
-import Button from './UI/Button';
+import { filterTypes } from '../utils';
 import Task from './Task';
 import TaskFilter from "./TaskFilter";
 
 export default {
   data() {
     return {
-      value: '',
+      taskTitle: '',
       activeFilter: "all"
     }
   },
@@ -73,13 +64,32 @@ export default {
       'tasks'
     ]),
     filteredTasks() {
-      return getFilteredTasks.call(this);
+      // Filter by category
+      let result = this.tasks
+        .filter(task => task.categoryId === this.currentCategoryId)
+
+      // Filter by status
+      switch (this.activeFilter) {
+        case filterTypes.COMPLETED:
+          result = result.filter(task => task.completed);
+          break;
+        case filterTypes.ACTIVE:
+          result = result.filter(task => !task.completed);
+      }
+
+      // Filter by title
+      if (this.taskTitle.trim() && result.length) {
+        result = result.filter(task => {
+          const str = task.title.toLowerCase();
+          const substr = this.taskTitle.trim().toLowerCase();
+          return str.includes(substr);
+        });
+      }
+
+      return result;
     }
   },
   methods: {
-    create () {
-      createTask.call(this);
-    },
     remove (task) {
       this.$store.dispatch('deleteTask', task);
     },
@@ -92,7 +102,6 @@ export default {
   },
   components: {
     appTask: Task,
-    appButton: Button,
     appTaskFilter: TaskFilter
   },
 }

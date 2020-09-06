@@ -49,7 +49,6 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import { createCategory } from '../methods/category';
 import Button from './UI/Button';
 
 export default {
@@ -66,7 +65,10 @@ export default {
   },
   methods: {
     create () {
-      createCategory.call(this);
+      const name = this.name.trim();
+      if (name) {
+        this.$store.dispatch('createCategory', name);
+      }
     },
     setCurrent (id) {
       if (id !== this.currentCategoryId) {

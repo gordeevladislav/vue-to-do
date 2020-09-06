@@ -1,7 +1,8 @@
 <template>
   <div>
     <app-header
-      @click="toggleDrower"
+      @drower-toggle-click="drower = !drower"
+      @add-button-click="popup = true"
       :isDrowerOn="drower"
     />
     <main class="main">
@@ -10,11 +11,13 @@
         <app-categories v-if="drower" />
       </transition>
       <app-task-list />
+      <app-popup v-if="popup" @click="popup = false" />
     </main>
   </div>
 </template>
 
 <script>
+import Popup from './components/Popup';
 import Backdrop from './components/UI/Backdrop'
 import Header from './components/Header'
 import Categories from './components/Categories'
@@ -23,7 +26,8 @@ import TaskList from './components/TaskList'
 export default {
   data () {
     return {
-      drower: false
+      drower: false,
+      popup: false
     }
   },
   methods: {
@@ -35,7 +39,8 @@ export default {
     appTaskList: TaskList,
     appCategories: Categories,
     appBackdrop: Backdrop,
-    appHeader: Header
+    appHeader: Header,
+    appPopup: Popup
   }
 }
 </script>

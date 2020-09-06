@@ -1,3 +1,4 @@
+import { v4 } from 'uuid';
 import { tasks } from '../mock';
 
 export default {
@@ -13,8 +14,16 @@ export default {
     }
   },
   actions: {
-    createTask ({ commit }, payload) {
-      commit('createTask', payload);
+    createTask ({ commit, getters }, { title, text }) {
+      const task = {
+        title,
+        text,
+        id: v4(),
+        completed: false,
+        categoryId: getters.currentCategoryId
+      };
+
+      commit('createTask', task);
     },
 
     deleteTask({ commit, getters }, payload) {
