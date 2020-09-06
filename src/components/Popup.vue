@@ -2,9 +2,9 @@
   <div class="popup">
     <button
       class="popup__closer fas fa-times"
+      @click="$emit('click')"
       type="button"
       aria-label="Close popup"
-      @click="$emit('click')"
     />
     <div class="popup__container">
       <label class="popup__label" for="task-title">Название задачи</label>
@@ -16,10 +16,11 @@
     </div>
     <app-button
       class="popup__button-add"
-      type="add"
-      text="Add new task"
-      aria-label="Create new task"
       @click="create"
+      :disabled="!(title.trim() && text.trim())"
+      text="Add new task"
+      type="add"
+      aria-label="Create new task"
     />
   </div>
 </template>
@@ -36,15 +37,13 @@ export default {
   },
   methods: {
     create () {
-      const text = this.text.trim();
-      const title = this.title.trim();
+      this.$store.dispatch('createTask', {
+        text: this.text,
+        title: this.title
+      });
 
-      if (text && title) {
-        this.$store.dispatch('createTask', { text, title });
-
-        this.title = '';
-        this.text = '';
-      }
+      this.title = '';
+      this.text = '';
     },
   },
   components: {
@@ -114,9 +113,19 @@ export default {
 
 .popup__input--text {
   box-sizing: border-box;
-  max-width: 420px;
-  min-width: 420px;
+  width: 100%;
   padding: 6px 10px;
+}
+
+@media (max-width: 515px) {
+  .popup {
+    top: 70px;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    margin: 0;
+  }
 }
 
 </style>

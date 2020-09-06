@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="backdrop"
-    @click="$emit('click')"
-  ></div>
+  <div class="backdrop" @click="$emit('click')"></div>
 </template>
 
 <style>

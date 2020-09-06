@@ -1,13 +1,13 @@
 <template>
   <section class="tasks">
     <h2 class="visually-hidden">Task list</h2>
-    <div class="tasks__actions">
-      <div class="tasks__new-task-actions">
+    <div class="tasks__filter">
+      <div class="tasks__filter-input-container">
         <label class="visually-hidden" for="find-task">
           Find task by title
         </label>
         <input
-          class="tasks__input"
+          class="tasks__filter-input"
           v-model="taskTitle"
           type="text"
           placeholder="Find by title"
@@ -15,12 +15,12 @@
         />
       </div>
 
-      <app-task-filter
+      <app-filter-list
         @click="setActiveFilter"
         :activeFilter="activeFilter"
       />
     </div>
-    <ul
+    <div
       class="tasks__list"
       v-packery='{
         itemSelector: ".tasks__item",
@@ -34,14 +34,13 @@
         :key="index"
 
         class="tasks__item"
-        :item="task"
+        :task="task"
         @on-closer-click="remove(task)"
         @on-done-click="toggleStatus(task)"
         v-packery-item
         aria-label="Delete task"
       />
-    </ul>
-
+    </div>
   </section>
 </template>
 
@@ -49,7 +48,7 @@
 import { mapGetters } from 'vuex';
 import { filterTypes } from '../utils';
 import Task from './Task';
-import TaskFilter from "./TaskFilter";
+import FilterList from "./FilterList";
 
 export default {
   data() {
@@ -60,13 +59,13 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'currentCategoryId',
+      'currentGroupId',
       'tasks'
     ]),
     filteredTasks() {
-      // Filter by category
+      // Filter by group
       let result = this.tasks
-        .filter(task => task.categoryId === this.currentCategoryId)
+        .filter(task => task.groupId === this.currentGroupId)
 
       // Filter by status
       switch (this.activeFilter) {
@@ -102,7 +101,7 @@ export default {
   },
   components: {
     appTask: Task,
-    appTaskFilter: TaskFilter
+    appFilterList: FilterList
   },
 }
 </script>
@@ -113,7 +112,7 @@ export default {
   width: 100%;
 }
 
-.tasks__actions {
+.tasks__filter {
   display: flex;
   flex-direction: row;
   padding-top: 30px;
@@ -121,14 +120,14 @@ export default {
   padding-left: 2%;
 }
 
-.tasks__new-task-actions {
+.tasks__filter-input-container {
   display: flex;
   flex-direction: row;
   width: 23.5%;
   margin-right: 2%;
 }
 
-.tasks__input {
+.tasks__filter-input {
   width: 100%;
   height: 40px;
   margin-right: 15px;
@@ -144,11 +143,6 @@ export default {
   padding: 2.307%;
 
   list-style-type: none;
-}
-
-.tasks__add-button {
-  width: 100px;
-  height: 40px;
 }
 
 .tasks__item {
@@ -168,41 +162,41 @@ export default {
 }
 
 @media (max-width: 1400px) {
-  .tasks__new-task-actions {
+  .tasks__filter-input-container {
     width: 32%;
   }
 
   .tasks__item {
-    width: 25.5%;
+    width: 30%;
   }
 }
 
 @media (max-width: 1170px) {
-  .tasks__new-task-actions {
+  .tasks__filter-input-container {
     width: 44%;
     margin-right: 5%;
   }
 
   .tasks__item {
-    width: 37%;
+    width: 45%;
   }
 
   .gutter-sizer {
     width: 4%;
   }
 
-  .tasks__actions {
+  .tasks__filter {
     padding-right: 4%;
     padding-left: 4%;
   }
 }
 
 @media (max-width: 690px) {
-  .tasks__actions {
+  .tasks__filter {
     flex-direction: column;
   }
 
-  .tasks__new-task-actions {
+  .tasks__filter-input-container {
     width: 100%;
     margin-right: 0;
     margin-bottom: 20px;
@@ -215,14 +209,14 @@ export default {
   }
 
   .tasks__item {
-    width: 33%;
+    width: 43%;
   }
 
   .gutter-sizer {
     width: 6%;
   }
 
-  .tasks__actions {
+  .tasks__filter {
     padding-right: 6%;
     padding-left: 6%;
   }
@@ -233,22 +227,16 @@ export default {
     padding: 5%;
   }
   .tasks__item {
-    width: 76%;
+    width: 90%;
   }
 
   .gutter-sizer {
     width: 5%;
   }
 
-  .tasks__actions {
+  .tasks__filter {
     padding-right: 5%;
     padding-left: 5%;
-  }
-}
-
-@media (max-width: 350px) {
-  .tasks__item {
-    width: 70%;
   }
 }
 </style>

@@ -1,34 +1,75 @@
 <template>
-  <li
-    class="task"
-    :class="{'task--important': item.important}"
-  >
-    <button
-      class="task__closer fas fa-times"
-      @click="$emit('on-closer-click')"
-      type="button"
-      aria-label="Delete task"
-    />
-    <div class="task__wrapper">
+  <article class="task">
+    <div class="task__header">
+      <button
+        class="task__closer fas fa-times"
+        @click="$emit('on-closer-click')"
+        type="button"
+        aria-label="Delete task"
+      />
       <button
         class="task__completer fa-check-circle far"
-        :class="{'fas': item.completed, 'task__completer--done': item.completed}"
+        :class="{'fas': task.completed, 'task__completer--done': task.completed}"
         @click="$emit('on-done-click')"
         type="button"
         aria-label="Mark completed"
       />
-      <p class="task__text">
-        {{ item.title }}
+      <p class="task__title">
+        {{ task.title }}
       </p>
     </div>
-  </li>
+    <div class="task__body">
+      <p class="task__text">{{ task.text }}</p>
+      <button
+        class="task__button-edit far fa-edit"
+        type="button"
+        @click="changeGroupMode = !changeGroupMode"
+        aria-label="Change group"
+      />
+
+      <div class="task__modal" v-if="changeGroupMode">
+        <h3 class="task__modal-title">Move to group</h3>
+        <ul class="task__modal-list">
+          <li
+            v-for="(group, index) in groupsToChange"
+            :key="index"
+          >
+            <button class="task__modal-button" @click="changeGroup(group.id)" type="button">
+              {{ group.name }}
+            </button>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </article>
 </template>
 
 
 <script>
 
 export default {
-  props: ['item']
+  props: ['task'],
+  data() {
+    return {
+      changeGroupMode: false
+    }
+  },
+  computed: {
+    groupsToChange() {
+      return this.$store.getters.groups
+        .filter(group => group.id !== this.task.groupId);
+    }
+  },
+  methods: {
+    changeGroup(groupId) {
+      this.$store.dispatch('changeGroup', {
+        task: this.task,
+        groupId
+      });
+      this.changeGroupMode = false;
+    }
+  }
 }
 
 </script>
@@ -36,7 +77,7 @@ export default {
 <style>
 .task {
   position: relative;
-  padding: 20px 50px 20px 10px;
+  padding: 20px 0;
 
   background-color: white;
   border-radius: 8px;
@@ -66,10 +107,11 @@ export default {
   color: #a4a4a4;
 }
 
-.task__wrapper {
+.task__header {
   display: flex;
   flex-direction: row;
   align-items: center;
+  padding: 0 40px 0 10px;
 }
 
 .task__completer {
@@ -108,7 +150,7 @@ export default {
   color: #80c780;
 }
 
-.task__text {
+.task__title {
   display: inline-block;
   width: 78%;
   margin: 0;
@@ -117,4 +159,57 @@ export default {
 
   word-wrap: break-word;
 }
+
+.task__body {
+  position: relative;
+  padding: 0 20px;
+}
+
+.task__text {
+  width: 100%;
+}
+
+.task__button-edit {
+  position: absolute;
+  bottom: -30px;
+  right: 5px;
+  font-size: 19px;
+  color: gray;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.task__button-edit:hover {
+  color: #aaaaaa;
+}
+
+.task__modal {
+  position: absolute;
+  bottom: -5px;
+  right: 30px;
+  padding: 10px 15px;
+  background-color: #d0d0d0;
+  border-radius: 5px;
+}
+
+.task__modal-title {
+  font-size: 18px;
+  margin: 0;
+  margin-bottom: 7px;
+}
+
+.task__modal-list {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.task__modal-button {
+  font-size: 17px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 </style>

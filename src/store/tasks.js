@@ -20,7 +20,7 @@ export default {
         text,
         id: v4(),
         completed: false,
-        categoryId: getters.currentCategoryId
+        groupId: getters.currentGroupId
       };
 
       commit('createTask', task);
@@ -44,11 +44,21 @@ export default {
       commit('updateTasks', tasks);
     },
 
-    removeTasksByCategoryId ({ commit, getters }, payload) {
+    removeTasksByGroupId ({ commit, getters }, payload) {
       const tasksWithoutToRemove = getters.tasks
-        .filter(task => task.categoryId !== payload);
+        .filter(task => task.groupId !== payload);
 
       commit('updateTasks', tasksWithoutToRemove);
+    },
+
+    changeGroup ({ commit, getters }, { task, groupId }) {
+      const tasks = getters.tasks;
+      const taskIndex = tasks.indexOf(task);
+
+      task.groupId = groupId;
+      tasks.splice(taskIndex, 1, task);
+
+      commit('updateTasks', tasks);
     }
   },
   getters: {

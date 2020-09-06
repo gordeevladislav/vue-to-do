@@ -38,16 +38,17 @@ export default {
 }
 
 .button--primary {
-  background-color: #00b3b3;
+  background-color: #00c9c9;
+  /* background-color: ?; */
   color: white;
 }
 
 .button--primary:hover {
-  background-color: #009f9f;
+  background-color: #00a1a1;
 }
 
 .button--primary:active {
-  background-color: #007f7f;
+  background-color: #00a1a1;
 }
 
 .button--primary:disabled {
@@ -71,4 +72,20 @@ export default {
   background-color: #80d390;
 }
 
+.button--add {
+  padding: 10px 15px;
+  background-color: #003153;
+}
+
+.button--add:hover {
+  background-color: #004c82;
+}
+
+.button--add:active {
+  background-color: #002742;
+}
+
+.button--add:disabled {
+  opacity: 0.4;
+}
 </style>

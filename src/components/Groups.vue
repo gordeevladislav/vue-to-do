@@ -1,46 +1,46 @@
 <template>
-  <section class="categories">
-    <div class="categories__actions">
-      <label class="visually-hidden" for="new-category">
-        Enter new category name
+  <section class="groups">
+    <div class="groups__actions">
+      <label class="visually-hidden" for="new-group">
+        Enter new group name
       </label>
       <input
-        class="categories__input"
+        class="groups__input"
         v-model="name"
         @keydown.enter="create"
         type="text"
-        placeholder="Add new category"
-        id="new-category"
+        placeholder="Add new group"
+        id="new-group"
       />
 
       <app-button
-        class="categories__button"
+        class="groups__button"
         @click="create"
         type="nav"
         text="Add"
-        aria-label="Create new tasks category"
+        aria-label="Create new tasks group"
       />
     </div>
 
-    <ul class="categories__list">
+    <ul class="groups__list">
       <li
-        class="categories__item"
-        v-for="({name, id}) of categories"
+        class="groups__item"
+        v-for="({name, id}) of groups"
         :key="id"
       >
         <a
-          class="categories__link"
-          :class="{'categories__link--active': id === currentCategoryId}"
+          class="groups__link"
+          :class="{'groups__link--active': id === currentGroupId}"
           @click.prevent="setCurrent(id)"
           href
         >
           {{ name }}
         </a>
         <button
-          class="category__closer fas fa-times"
+          class="group__closer fas fa-times"
           @click="remove(id)"
           type="button"
-          aria-label="Remove category"
+          aria-label="Remove group"
         />
       </li>
     </ul>
@@ -59,25 +59,25 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'categories',
-      'currentCategoryId'
+      'groups',
+      'currentGroupId'
     ])
   },
   methods: {
     create () {
       const name = this.name.trim();
       if (name) {
-        this.$store.dispatch('createCategory', name);
+        this.$store.dispatch('createGroup', name);
       }
     },
     setCurrent (id) {
-      if (id !== this.currentCategoryId) {
-        this.$store.dispatch('setCurrentCategory', id);
+      if (id !== this.currentGroupId) {
+        this.$store.dispatch('setCurrentGroup', id);
       }
     },
     remove (id) {
-      this.$store.dispatch('removeCategory', id);
-      this.$store.dispatch('removeTasksByCategoryId', id);
+      this.$store.dispatch('removeGroup', id);
+      this.$store.dispatch('removeTasksByGroupId', id);
     },
   },
   components: {
@@ -88,7 +88,7 @@ export default {
 </script>
 
 <style>
-.categories {
+.groups {
   position: fixed;
   left: 0;
   top: 70px;
@@ -104,12 +104,12 @@ export default {
   z-index: 10;
 }
 
-.categories__actions {
+.groups__actions {
   display: flex;
   flex-direction: row;
 }
 
-.categories__input {
+.groups__input {
   flex-grow: 1;
   width: 50%;
   height: 40px;
@@ -123,13 +123,13 @@ export default {
   background-color: #c6c6c6;
 }
 
-.categories__list {
+.groups__list {
   margin: 0;
   padding: 20px 0;
   list-style-type: none;
 }
 
-.categories__item {
+.groups__item {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -137,12 +137,12 @@ export default {
   margin-bottom: 10px;
 }
 
-.categories__button {
+.groups__button {
   width: 50px;
   height: 40px;
 }
 
-.category__closer {
+.group__closer {
   width: 30px;
   height: 30px;
   padding: 0;
@@ -155,39 +155,39 @@ export default {
   cursor: pointer;
 }
 
-.category__closer:hover {
+.group__closer:hover {
   color: #434343;
 }
 
-.category__closer:active {
+.group__closer:active {
   color: #a4a4a4;
 }
 
-.categories__link {
+.groups__link {
   font-family: 'Noto Sans JP', sans-serif;
   font-size: 25px;
   text-decoration: none;
   color: #010e18;
 }
 
-.categories__link:hover {
+.groups__link:hover {
   color: #013e74;
 }
 
-.categories__link:active {
+.groups__link:active {
   color: #010b13;
 }
 
-.categories__link--active {
+.groups__link--active {
   font-weight: 700;
 }
 
 @media (max-width: 480px) {
-  .categories {
+  .groups {
     max-width: none;
   }
 
-  .categories__input {
+  .groups__input {
     width: 67%;
   }
 }

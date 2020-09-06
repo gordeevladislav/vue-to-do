@@ -11,10 +11,10 @@
       <h1 class="header__title">Vue To Do</h1>
     </div>
     <app-button
-      class="tasks__add-button"
-      text="Add"
-      type="primary"
+      class="header__add-button"
       @click="$emit('add-button-click')"
+      text="Create new task"
+      type="primary"
       aria-label="Создать задачу"
     />
   </header>
@@ -67,7 +67,20 @@ export default {
   cursor: pointer;
 }
 
+.header__add-button {
+  box-sizing: border-box;
+  padding: 10px 20px;
+  height: 45px;
+  font-size: 20px;
+}
+
 .header__title {
   color: white;
+}
+
+@media (max-width: 500px) {
+  .header__title {
+    display: none;
+  }
 }
 </style>

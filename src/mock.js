@@ -1,64 +1,53 @@
 import { v4 } from 'uuid';
-import { getRandomArrayElement } from './utils';
 
-const TASKS_COUNT = 7;
-const CATEGORIES_COUNT = 2;
+export const groups = [
+  { name: 'Срочные', id: v4() },
+  { name: 'Рабочие', id: v4() }
+];
 
-const generateRandomTaskText = () => {
-  const texts = [
-    'Сходить в магазин',
-    'Покормить кота',
-    'Заняться спортом',
-    'Позвонить маме',
-    'Помочь бабушке на даче',
-    'Сделать уроки',
-    'Помириться с Пашей',
-    'Посмотреть фильм',
-    'Приготовить поесть',
-    'Сходить в душ',
-    'Помедитировать',
-    'Проведать тетю Машу',
-    'Собрать стол',
-    'Убрать на кухне'
-  ];
-
-  return getRandomArrayElement(texts);
-};
-
-const generateRandomCategoryName = () => {
-  const names = [
-    'Срочные',
-    'Домашние',
-    'Рабочие',
-    'Прямо сейчас',
-    'Быт',
-  ];
-
-  return getRandomArrayElement(names);
-};
-
-const getRandomCategoryId = () => {
-  const category = getRandomArrayElement(categories);
-  return category.id;
-}
-
-const generateCategory = () => {
-  return {
-    name: generateRandomCategoryName(),
-    id: v4()
-  }
-};
-
-const generateTask = () => {
-  return {
-    title: generateRandomTaskText(),
-    text: generateRandomTaskText(),
+export const tasks = [
+  { title: 'Сходить в магазин',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio, esse! Voluptatibus veniam sint, ipsum ratione ipsam optio mollitia dolore eligendi odio porro ipsa non dolor modi enim doloribus esse cum.',
     id: v4(),
     completed: false,
-    categoryId: getRandomCategoryId()
+    groupId: groups[0].id
+  }, {
+    title: 'Позвонить маме',
+    text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Asperiores quos, excepturi nam assumenda eligendi consectetur, minima voluptatibus laborum explicabo sint eaque totam similique fuga quaerat minus! Consequuntur cum praesentium enim.',
+    id: v4(),
+    completed: false,
+    groupId: groups[0].id
+  }, {
+    title: 'Помедитировать',
+    text: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita dolorem impedit asperiores obcaecati voluptatem officiis, temporibus dignissimos laborum error provident dicta aut consectetur eligendi, totam, ipsa sed ducimus sapiente tempora.',
+    id: v4(),
+    completed: false,
+    groupId: groups[0].id
+  }, {
+    title: 'Собрать стол',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam enim ullam voluptate dolorum commodi, vel consequatur sit obcaecati. Mollitia itaque aperiam quidem laborum? Sed labore iusto ea possimus cupiditate.',
+    id: v4(),
+    completed: false,
+    groupId: groups[0].id
+  }, {
+    title: 'Позвонить начальнику',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam enim ullam voluptate dolorum commodi, vel consequatur sit obcaecati. Mollitia itaque aperiam quidem laborum? Sed labore iusto ea possimus cupiditate.',
+    id: v4(),
+    completed: false,
+    groupId: groups[1].id
+  }, {
+    title: 'Приготовить поесть',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam enim ullam voluptate dolorum commodi, vel consequatur sit obcaecati. Mollitia itaque aperiam quidem laborum? Sed labore iusto ea possimus cupiditate.',
+    id: v4(),
+    completed: false,
+    groupId: groups[1].id
+  }, {
+    title: 'Убрать на кухне',
+    text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium quibusdam enim ullam voluptate dolorum commodi, vel consequatur sit obcaecati. Mollitia itaque aperiam quidem laborum? Sed labore iusto ea possimus cupiditate.',
+    id: v4(),
+    completed: false,
+    groupId: groups[1].id
   }
-};
+];
 
-export const categories = new Array(CATEGORIES_COUNT).fill().map(generateCategory);
-export const tasks = new Array(TASKS_COUNT).fill().map(generateTask);
-export const currentCategory = getRandomCategoryId();
+export const currentGroup = groups[0].id;

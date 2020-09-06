@@ -1,13 +1,13 @@
 <template>
-  <ul class="filter__list">
+  <ul class="tasks__filter-list">
     <li
       v-for="(filter, index) of filters"
       :key="index"
-      class="filter__item"
-      :class="{'filter__item--active': filter === activeFilter}"
+      class="tasks__filter-item"
+      :class="{'tasks__filter-item--active': filter === activeFilter}"
     >
       <a
-        class="filter__link"
+        class="tasks__filter-link"
         @click.prevent="$emit('click', filter)"
         href
       > {{ filter }}
@@ -31,7 +31,7 @@ export default {
 
 <style>
 
-.filter__list {
+.tasks__filter-list {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -42,15 +42,15 @@ export default {
   list-style-type: none;
 }
 
-.filter__item:not(.filter__item--active):hover {
+.tasks__filter-item:not(.tasks__filter-item--active):hover {
   border-bottom: 3px dashed #a0afaf;
 }
 
-.filter__item--active {
+.tasks__filter-item--active {
   border-bottom: 3px dashed darkslategrey;
 }
 
-.filter__link {
+.tasks__filter-link {
   font-size: 22px;
   text-decoration: none;
   color: darkslategrey;
