@@ -1,6 +1,6 @@
 # To-do list
 
-<img width="800" alt="Чат на Vue" src="vue-to-do.gif">
+<img width="800" alt="Чат на Vue" src="to-do.gif">
 
 Клиентская часть to-do приложения на Vue.js.
 
